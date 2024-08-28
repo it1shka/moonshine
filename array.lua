@@ -26,4 +26,24 @@ function array.filter(target, selector)
   return output
 end
 
+---@generic A, B
+---@param target A[]
+---@param reducer fun(acc: B, elem: A, index: integer): B
+---@param initial B?
+---@return B
+function array.reduce(target, reducer, initial)
+  local acc, start
+  if initial ~= nil then
+    acc = initial
+    start = 1
+  else
+    acc = target[1]
+    start = 2
+  end
+  for i = start, #target do
+    acc = reducer(acc, target[i], i)
+  end
+  return acc
+end
+
 return array

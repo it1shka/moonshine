@@ -55,6 +55,15 @@ function test.case(case_name, case_fn)
   end
 end
 
+---@generic A
+---@param value A
+---@return fun(): A
+function test.const_function(value)
+  return function()
+    return value
+  end
+end
+
 ---@param correct any[]
 ---@param tested any[]
 function test.arrayShallowAssert(correct, tested)
