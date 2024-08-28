@@ -64,6 +64,13 @@ function test.const_function(value)
   end
 end
 
+---@param correct any
+---@param tested any
+function test.valueAssert(correct, tested)
+  local error_msg = "expected " .. tostring(correct) .. ", found " .. tostring(tested)
+  assert(correct == tested, error_msg)
+end
+
 ---@param correct any[]
 ---@param tested any[]
 function test.arrayShallowAssert(correct, tested)

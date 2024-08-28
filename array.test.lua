@@ -32,24 +32,40 @@ test.suite("array.filter", {
 test.suite("array.reduce", {
   test.case("empty array with initial", function()
     local result = array.reduce({}, test.const_function(nil), 100)
-    assert(result == 100, "didn't return initial value")
+    test.valueAssert(100, result)
   end),
   test.case("empty array without initial", function()
     local result = array.reduce({}, test.const_function(nil))
-    assert(result == nil, "didn't return nil")
+    test.valueAssert(nil, result)
   end),
   test.case("with initial", function()
     local target = {1, 2, 3, 4, 5}
     local result = array.reduce(target, function (acc, elem)
       return acc + elem
     end, 100)
-    assert(result == 115, "wrong result: expected 115, got " .. result)
+    test.valueAssert(115, result)
   end),
   test.case("without initial", function()
     local target = {1, 2, 3, 4}
     local result = array.reduce(target, function (acc, elem)
       return acc * elem
     end)
-    assert(result == 24, "wrong result: expected 24, got " .. result)
+    test.valueAssert(24, result)
+  end),
+})
+
+test.suite("array.find", {
+  test.case("empty array", function()
+    local result = array.find({}, test.const_function(true))
+    test.valueAssert(nil, result)
+  end),
+
+  test.case("find even", function()
+    local target = {1, 3, 17, 19, 29, 24, 2, 4, 6, 101, 103}
+    local result = array.find(target, function (x)
+      return x % 2 == 0
+    end)
+    -- TODO:
+    --test.valueAssert(
   end),
 })

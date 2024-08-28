@@ -46,4 +46,12 @@ function array.reduce(target, reducer, initial)
   return acc
 end
 
+---@generic A
+---@param target A[]
+---@param selector fun(elem: A, index: integer): boolean
+---return A?
+function array.find(target, selector)
+
+end
+
 return array
