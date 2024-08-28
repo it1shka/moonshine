@@ -22,6 +22,9 @@ test.suite("array.filter", {
   end),
   test.case("even numbers", function()
     local numbers = {1, 2, 3, 4, 5, 6, 7}
-    -- local result = array.filter()
+    local result = array.filter(numbers, function (x)
+      return x % 2 == 0
+    end)
+    test.arrayShallowAssert({2, 4, 6}, result)
   end)
 })

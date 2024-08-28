@@ -23,7 +23,7 @@ build = {
   type = "builtin",
   modules = {
     moonshine = "lib.lua",
-    moonshine_test = "test_utils.lua",
+    moonshine_array = "array.lua",
   },
 }
 
