@@ -106,3 +106,20 @@ test.suite("array.every", {
     test.valueAssert(false, result)
   end),
 })
+
+test.suite("array.sequence", {
+  test.case("empty sequence", function()
+    local result = array.sequence(0, "A")
+    test.arrayShallowAssert({}, result)
+  end),
+  test.case("constant sequence", function()
+    local result = array.sequence(3, "Lua")
+    test.arrayShallowAssert({"Lua", "Lua", "Lua"}, result)
+  end),
+  test.case("odd sequence", function()
+    local result = array.sequence(5, function (i) 
+      return i * 2 - 1
+    end)
+    test.arrayShallowAssert({1, 3, 5, 7, 9}, result)
+  end),
+})

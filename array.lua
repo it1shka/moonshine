@@ -86,4 +86,21 @@ function array.every(target, selector)
   return true
 end
 
+---@generic A
+---@param length integer
+---@param construct (A | fun(index: integer): A)
+---@return A[]
+function array.sequence(length, construct)
+  local output = {}
+  for i = 1, length do
+    -- TODO: support __call metamethod
+    if type(construct) == "function" then
+      output[i] = construct(i)
+    else
+      output[i] = construct
+    end
+  end
+  return output
+end
+
 return array
