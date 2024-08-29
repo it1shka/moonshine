@@ -1,3 +1,5 @@
+local internal_utils = require("internal_utils")
+
 local array = {}
 
 ---@generic A, B
@@ -93,14 +95,32 @@ end
 function array.sequence(length, construct)
   local output = {}
   for i = 1, length do
-    -- TODO: support __call metamethod
-    if type(construct) == "function" then
+    if internal_utils.is_callable(construct) then
       output[i] = construct(i)
     else
       output[i] = construct
     end
   end
   return output
+end
+
+---@generic A
+---@param target A[]
+---@param selector (A | fun(elem: A, index: integer): boolean)
+---@return integer?
+function array.find_index(target, selector)
+  for index, value in ipairs(target) do
+    local flag
+    if internal_utils.is_callable(selector) then
+      flag = selector(value, index)
+    else
+      flag = selector == value
+    end
+    if flag then
+      return index
+    end
+  end
+  return nil
 end
 
 return array

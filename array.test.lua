@@ -123,3 +123,28 @@ test.suite("array.sequence", {
     test.arrayShallowAssert({1, 3, 5, 7, 9}, result)
   end),
 })
+
+test.suite("array.find_index", {
+  test.case("empty array", function()
+    local result = array.find_index({}, test.const_function(true))
+    test.valueAssert(nil, result)
+  end),
+  test.case("by value", function()
+    local target = {4, 3, 5, "Lua", "JavaScript", "C++", "Prolog"}
+    local result = array.find_index(target, "JavaScript")
+    test.valueAssert(5, result)
+  end),
+  test.case("by function", function()
+    local target = {{"Tikhon", "Belousov"}, {"John", "Doe"}, {"Freddie", "Mercury"}}
+    local result = array.find_index(target, function (elem)
+      local full_name = elem[1] .. " " .. elem[2]
+      return full_name == "John Doe"
+    end)
+    test.valueAssert(2, result)
+  end),
+  test.case("non-existent", function()
+    local target = {"Lua", "Perl", "Raku", "Ruby", "JavaScript"}
+    local result = array.find_index(target, "C++")
+    test.valueAssert(nil, result)
+  end),
+})
