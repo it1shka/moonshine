@@ -148,3 +148,25 @@ test.suite("array.find_index", {
     test.valueAssert(nil, result)
   end),
 })
+
+test.suite("array.flatten", {
+  test.case("empty array", function()
+    local cases = {{}, {{}, {{}}, {{{{}}}}}, {{}, {}}}
+    for _, each in ipairs(cases) do
+      local result = array.flatten(each)
+      test.arrayShallowAssert({}, result)
+    end
+  end),
+  test.case("shallow nesting", function()
+    local target = {{1, 2}, 3, 4, {"Lua", "C++"}}
+    local result = array.flatten(target)
+    local expected = {1, 2, 3, 4, "Lua", "C++"}
+    test.arrayShallowAssert(expected, result)
+  end),
+  test.case("deep nesting", function()
+    local target = {{{1, 2,}, {3, 4}}, {5, {{6}}}, 7, 8}
+    local result = array.flatten(target)
+    local expected = {1, 2, 3, 4, 5, 6, 7, 8}
+    test.arrayShallowAssert(expected, result)
+  end),
+})

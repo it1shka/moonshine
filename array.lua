@@ -93,6 +93,7 @@ end
 ---@param construct (A | fun(index: integer): A)
 ---@return A[]
 function array.sequence(length, construct)
+  assert(length >= 0, "Sequence length should be non-negative")
   local output = {}
   for i = 1, length do
     if internal_utils.is_callable(construct) then
@@ -121,6 +122,24 @@ function array.find_index(target, selector)
     end
   end
   return nil
+end
+
+---@generic A
+---@alias Rec (A | Rec[])
+---@param target Rec[]
+function array.flatten(target)
+  local output = {}
+  for _, value in ipairs(target) do
+    if internal_utils.is_array(value) then
+      local flattened = array.flatten(value)
+      for _, each in ipairs(flattened) do
+        output[#output + 1] = each
+      end
+    else
+      output[#output + 1] = value
+    end
+  end
+  return output
 end
 
 return array
