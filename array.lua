@@ -51,7 +51,39 @@ end
 ---@param selector fun(elem: A, index: integer): boolean
 ---return A?
 function array.find(target, selector)
+  for index, value in ipairs(target) do
+    if selector(value, index) then
+      return value
+    end
+  end
+  return nil
+end
 
+---@generic A
+---@param ... A[]
+---@return A[]
+function array.concat(...)
+  local args = table.pack(...)
+  local output = {}
+  for _, arr in ipairs(args) do
+    for _, each in ipairs(arr) do
+      output[#output + 1] = each
+    end
+  end
+  return output
+end
+
+---@generic A
+---@param target A[]
+---@param selector fun(elem: A, index: integer): boolean
+---@return boolean
+function array.every(target, selector)
+  for index, value in ipairs(target) do
+    if not selector(value, index) then
+      return false
+    end
+  end
+  return true
 end
 
 return array

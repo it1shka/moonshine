@@ -59,13 +59,50 @@ test.suite("array.find", {
     local result = array.find({}, test.const_function(true))
     test.valueAssert(nil, result)
   end),
-
   test.case("find even", function()
     local target = {1, 3, 17, 19, 29, 24, 2, 4, 6, 101, 103}
     local result = array.find(target, function (x)
       return x % 2 == 0
     end)
-    -- TODO:
-    --test.valueAssert(
+    test.valueAssert(24, result)
+  end),
+  test.case("element is not present", function()
+    local target = {1, 3, 5, 7, 9}
+    local result = array.find(target, function (x)
+      return x * 2 > 20
+    end)
+    test.valueAssert(nil, result)
+  end),
+})
+
+test.suite("array.concat", {
+  test.case("empty array", function()
+    local result = array.concat()
+    test.arrayShallowAssert({}, result)
+  end),
+  test.case("simple case", function()
+    local result = array.concat({1, 2}, {3, 4}, {5, 6})
+    test.arrayShallowAssert({1, 2, 3, 4, 5, 6}, result)
+  end),
+})
+
+test.suite("array.every", {
+  test.case("empty array", function()
+    local result = array.every({}, test.const_function(false))
+    test.valueAssert(true, result)
+  end),
+  test.case("true case", function()
+    local target = {1, 3, 5, 7, 9}
+    local result = array.every(target, function (x)
+      return x % 2 == 1
+    end)
+    test.valueAssert(true, result)
+  end),
+  test.case("false case", function()
+    local target = {2, 4, 5, 6, 8}
+    local result = array.every(target, function (x)
+      return x % 2 == 0
+    end)
+    test.valueAssert(false, result)
   end),
 })
