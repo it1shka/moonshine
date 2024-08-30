@@ -24,6 +24,7 @@ build = {
   modules = {
     moonshine = "lib.lua",
     moonshine_array = "array.lua",
+    moonshine_func = "func.lua",
   },
 }
 

@@ -117,7 +117,7 @@ test.suite("array.sequence", {
     test.arrayShallowAssert({"Lua", "Lua", "Lua"}, result)
   end),
   test.case("odd sequence", function()
-    local result = array.sequence(5, function (i) 
+    local result = array.sequence(5, function (i)
       return i * 2 - 1
     end)
     test.arrayShallowAssert({1, 3, 5, 7, 9}, result)
