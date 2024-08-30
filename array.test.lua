@@ -170,3 +170,28 @@ test.suite("array.flatten", {
     test.arrayShallowAssert(expected, result)
   end),
 })
+
+test.suite("array.flat_map", {
+  test.case("empty array", function()
+    local result = array.flat_map({}, test.const_function({"Lua", "C++"}))
+    test.arrayShallowAssert({}, result)
+  end),
+  test.case("simple case 1", function()
+    local target = {1, 3, 5, 7}
+    local result = array.flat_map(target, function (x)
+      return {x, x + 1}
+    end)
+    test.arrayShallowAssert({1, 2, 3, 4, 5, 6, 7, 8}, result)
+  end),
+  test.case("simple case 2", function()
+    local target = {1, 5, 10}
+    local result = array.flat_map(target, function (x)
+      return {"Current " .. x, "Twice " .. (x * 2)}
+    end)
+    test.arrayShallowAssert({
+      "Current 1", "Twice 2",
+      "Current 5", "Twice 10",
+      "Current 10", "Twice 20",
+    }, result)
+  end),
+})

@@ -77,7 +77,11 @@ function test.arrayShallowAssert(correct, tested)
   assert(type(tested) == "table", "Not a table")
   assert(#correct == #tested, "Length mismatch")
   for index, value in ipairs(correct) do
-    assert(value == tested[index], "Mismatch at index " .. index)
+    local msg =
+      "Mismatch at index " .. index .. "; " ..
+      "Expected: " .. table.concat(correct, ", ") .. "; " ..
+      "Got: " .. table.concat(tested, ", ")
+    assert(value == tested[index], msg)
   end
 end
 

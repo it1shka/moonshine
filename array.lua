@@ -142,4 +142,23 @@ function array.flatten(target)
   return output
 end
 
+---@generic A, B
+---@param target A[]
+---@param transformer fun(elem: A, index: integer): (B | B[])
+---@return B[]
+function array.flat_map(target, transformer)
+  local output = {}
+  for index, value in ipairs(target) do
+    local transformed = transformer(value, index)
+    if internal_utils.is_array(transformed) then
+      for _, each in ipairs(transformed) do
+        output[#output + 1] = each
+      end
+    else
+      output[#output + 1] = transformed
+    end
+  end
+  return output
+end
+
 return array
