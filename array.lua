@@ -189,4 +189,16 @@ function array.contains(target, selector)
   return false
 end
 
+---@generic A
+---@param target A[]
+---@return A[]
+function array.reverse(target)
+  local output = {}
+  for index, value in ipairs(target) do
+    local back_index = #target - index + 1
+    output[back_index] = value
+  end
+  return output
+end
+
 return array

@@ -254,3 +254,19 @@ test.suite("array.contains", {
     test.valueAssert(false, result)
   end)
 })
+
+test.suite("array.reverse", {
+  test.case("empty array", function()
+    local result = array.reverse({})
+    test.arrayShallowAssert({}, result)
+  end),
+  test.case("single element", function()
+    local result = array.reverse({"Lua"})
+    test.arrayShallowAssert({"Lua"}, result)
+  end),
+  test.case("multiple elements", function()
+    local target = {2, 4, 6, 8, "Lua", "Erlang"}
+    local result = array.reverse(target)
+    test.arrayShallowAssert({"Erlang", "Lua", 8, 6, 4, 2}, result)
+  end),
+})
