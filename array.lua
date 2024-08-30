@@ -161,4 +161,32 @@ function array.flat_map(target, transformer)
   return output
 end
 
+---@generic A
+---@param target A[]
+---@param action fun(elem: A, index: integer): any
+function array.for_each(target, action)
+  for index, value in ipairs(target) do
+    action(value, index)
+  end
+end
+
+---@generic A
+---@param target A[]
+---@param selector (A | fun(elem: A, index: integer): boolean)
+---@return boolean
+function array.contains(target, selector)
+  for index, value in ipairs(target) do
+    local flag
+    if internal_utils.is_callable(selector) then
+      flag = selector(value, index)
+    else
+      flag = (value == selector)
+    end
+    if flag then
+      return true
+    end
+  end
+  return false
+end
+
 return array

@@ -195,3 +195,62 @@ test.suite("array.flat_map", {
     }, result)
   end),
 })
+
+test.suite("array.for_each", {
+  test.case("sum of numbers", function()
+    local target = {1, 2, 3, 4, 5}
+    local sum = 0
+    array.for_each(target, function(x)
+      sum = sum + x
+    end)
+    test.valueAssert(15, sum)
+  end),
+  test.case("print names", function()
+    local target = {"Tikhon", "Alex", "Vitaliya"}
+    local printed = ""
+    array.for_each(target, function (name, index)
+      if index == #target then
+        printed = printed .. name
+      else
+        printed = printed .. name .. ", "
+      end
+    end)
+    test.valueAssert("Tikhon, Alex, Vitaliya", printed)
+  end),
+})
+
+test.suite("array.contains", {
+  test.case("empty array", function()
+    local result = array.contains({}, "Lua")
+    test.valueAssert(false, result)
+  end),
+  test.case("present by value", function()
+    local target = {"C++", "Dart", "MoonScript", "Ruby", "Lua", "CoffeeScript"}
+    local result = array.contains(target, "Lua")
+    test.valueAssert(true, result)
+  end),
+  test.case("not present by value", function()
+    local target = {"PureScript", "ReasonML", "Pharo", "Erlang"}
+    local result = array.contains(target, "Lua")
+    test.valueAssert(false, result)
+  end),
+  test.case("present by function", function()
+    local liked = {
+      JavaScript = true,
+      Java = true,
+      Kotlin = false,
+    }
+    local target = {"JavaScript", "Java", "Kotlin"}
+    local result = array.contains(target, function (lang)
+      return not liked[lang]
+    end)
+    test.valueAssert(true, result)
+  end),
+  test.case("not present by function", function()
+    local target = {"Tikhon", "Vlad", "Kacper", "Mateusz"}
+    local result = array.contains(target, function (name)
+      return name[1] == "L"
+    end)
+    test.valueAssert(false, result)
+  end)
+})
