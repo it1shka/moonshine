@@ -78,7 +78,3 @@ test.suite("func.curry", {
     test.valueAssert(40, mult10(4))
   end),
 })
-
-test.suite("func.memo", {
-
-})

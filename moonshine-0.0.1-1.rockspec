@@ -25,6 +25,7 @@ build = {
     moonshine = "lib.lua",
     moonshine_array = "array.lua",
     moonshine_func = "func.lua",
+    moonshine_object = "object.lua",
   },
 }
 
