@@ -39,11 +39,44 @@ test.suite("func.pipe", {
 })
 
 test.suite("func.compose", {
-
+  test.case("single function", function()
+    local result = func.compose(test.const_function("Lua"))()
+    test.valueAssert("Lua", result)
+  end),
+  test.case("composed chain", function()
+    local composed = func.compose(
+      function (x)
+        return x + 1
+      end,
+      function (x)
+        return x * 2
+      end,
+      function (x)
+        return x + 2
+      end
+    )
+    local result = composed(3)
+    test.valueAssert(11, result)
+  end),
 })
 
 test.suite("func.curry", {
-
+  test.case("simple case", function()
+    local curried = func.curry(function (a, b, c)
+      return a + b + c
+    end)
+    local result = curried(1)()(2)()(3)
+    test.valueAssert(6, result)
+  end),
+  test.case("useful case", function()
+    local mult = func.curry(function (a, b)
+      return a * b
+    end)
+    local mult5 = mult(5)
+    local mult10 = mult(10)
+    test.valueAssert(30, mult5(6))
+    test.valueAssert(40, mult10(4))
+  end),
 })
 
 test.suite("func.memo", {
