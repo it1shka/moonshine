@@ -201,4 +201,7 @@ function array.reverse(target)
   return output
 end
 
+local array_curried = internal_utils.compile_curried_module(array)
+array.curried = array_curried
+
 return array

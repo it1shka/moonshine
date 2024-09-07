@@ -1,3 +1,5 @@
+local internal_utils = require("internal_utils")
+
 local object = {}
 
 ---@generic A
@@ -21,5 +23,17 @@ function object.values(target)
   end
   return output
 end
+
+---@generic A
+---@param target A
+---@param action fun(target: A): any
+---@return A
+function object.tap(target, action)
+  action(target)
+  return target
+end
+
+local object_curried = internal_utils.compile_curried_module(object)
+object.curried = object_curried
 
 return object

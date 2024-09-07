@@ -71,3 +71,11 @@ test.suite("internal_utils.is_array", {
     test.valueAssert(false, result)
   end),
 })
+
+test.suite("internal_utils.reverse_curry", {
+  -- TODO:
+})
+
+test.suite("internal_utils.compile_curried_module", {
+  -- TODO:
+})
